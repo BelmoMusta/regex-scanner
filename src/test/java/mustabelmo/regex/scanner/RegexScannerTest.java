@@ -40,4 +40,19 @@ public class RegexScannerTest {
         System.out.println(listOfMatchedTokens);
         Assert.assertArrayEquals(expectedMatches, listOfMatchedTokens.toArray());
     }
+
+    @Test
+    public void testNextGetJustCapitalizedWords() {
+        final String regex = "([A-Z][A-Za-z]*)";
+        final String lorem = "Lorem Nulla dolor sit AAAAmet 12354,";
+        RegexScanner regexScanner = new RegexScanner(lorem, regex);
+
+        int count = 0;
+        while (regexScanner.hasNext()) {
+            regexScanner.next();
+            count++;
+
+        }
+        Assert.assertEquals(3, count);
+    }
 }
