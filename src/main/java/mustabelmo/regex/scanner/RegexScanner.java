@@ -1,6 +1,7 @@
 package mustabelmo.regex.scanner;
 import java.io.Closeable;
 import java.util.Iterator;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,6 +72,10 @@ public class RegexScanner implements Iterator<String>, Closeable {
             } while (!endReached && !matcher.find() && !input.isEmpty());
             return fullMatch;
         }
+    }
+    public <R> R next(Function<String ,R> mapper){
+        final String next = next();
+        return mapper.apply(next);
     }
 
     /**
