@@ -55,4 +55,20 @@ public class RegexScannerTest {
         }
         Assert.assertEquals(3, count);
     }
+
+    @Test
+    public void testNextWithMapper() {
+        final String regex = "Lorem";
+        final String lorem = "Lorem Nulla dolor sit AAAAmet 12354 Lorem,";
+        RegexScanner regexScanner = new RegexScanner(lorem, regex);
+
+        int countOfLengths = 0;
+        while (regexScanner.hasNext()) {
+            Integer length = regexScanner.next(String::length);
+            countOfLengths += length;
+
+
+        }
+        Assert.assertEquals(2 * "Lorem".length(), countOfLengths);
+    }
 }
