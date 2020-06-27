@@ -2,11 +2,15 @@ package mustabelmo.regex.scanner;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Function;
 
 public class RegexScannerTest {
     @Test
@@ -70,5 +74,28 @@ public class RegexScannerTest {
 
         }
         Assert.assertEquals(2 * "Lorem".length(), countOfLengths);
+    }
+
+
+    @Test
+    public void getMapFromKeyValuePairs() {
+        final String regex = "\\w+[\\t ]*:[\\t ]*\\w+";
+        final String keyValuePairs = "key0:0\n" +
+                "key1:   1\n" +
+                "key2: 10\n" +
+                "key3  :11\n" +
+                "key4:  111";
+
+        final RegexScanner regexScanner = new RegexScanner(keyValuePairs, regex);
+        final Map<String, String> keyValueMap = new LinkedHashMap<>();
+
+        while (regexScanner.hasNext()) {
+            final Function<String, String[]> mapper = token -> token.split("[\\t ]*:[\\t ]*");
+            final String[] split = regexScanner.next(mapper);
+            keyValueMap.put(split[0], split[1]);
+        }
+
+        System.out.println(keyValueMap);
+        Assert.assertEquals(5, keyValueMap.size());
     }
 }
