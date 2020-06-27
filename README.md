@@ -1,5 +1,7 @@
 # regex-scanner
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4a0a937750f94c77ab343341a1add08d)](https://app.codacy.com/manual/BelmoMusta/regex-scanner?utm_source=github.com&utm_medium=referral&utm_content=BelmoMusta/regex-scanner&utm_campaign=Badge_Grade_Dashboard)
+
 This repository contains some utilities to extract tokens that match a given regex from a string.
 
 For example, when you want to extract lines that represent a `key:value` items :
