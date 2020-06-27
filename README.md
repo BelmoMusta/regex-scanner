@@ -29,7 +29,7 @@ public static Map<String, String> getMapFromKeyValuePairs(String keyValuePairs) 
             System.out.println(mapFromKeyValuePairs);
         }
 ```
-## Output:
+## Output
 ```console
 {key0=0, key1=1, key2=10, key3=11, key4=111}
 ```

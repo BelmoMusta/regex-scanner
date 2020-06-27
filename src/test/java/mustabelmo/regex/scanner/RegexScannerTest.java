@@ -2,7 +2,6 @@ package mustabelmo.regex.scanner;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
