@@ -1,5 +1,5 @@
 # regex-scanner
-Regex based java scanner
+
 This repository contains some utilities to extract tokens that match a given regex from a string.
 
 For example, when you want to extract lines that represent a `key:value` items :
