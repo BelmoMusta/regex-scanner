@@ -73,6 +73,7 @@ public class RegexScannerTest {
 
         }
         Assert.assertEquals(2 * "Lorem".length(), countOfLengths);
+        regexScanner.close();
     }
 
 
@@ -96,5 +97,6 @@ public class RegexScannerTest {
 
         System.out.println(keyValueMap);
         Assert.assertEquals(5, keyValueMap.size());
+        regexScanner.close();
     }
 }
