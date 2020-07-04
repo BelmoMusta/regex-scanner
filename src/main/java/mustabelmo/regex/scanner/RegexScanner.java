@@ -43,7 +43,11 @@ public class RegexScanner implements Iterator<String>, Closeable {
      */
     @Override
     public boolean hasNext() {
-        return !endReached && !closed && !input.isEmpty();
+        if (closed) {
+            throw new IllegalStateException("Scanner is closed");
+        }
+        
+        return !endReached && !input.isEmpty();
     }
 
     /**

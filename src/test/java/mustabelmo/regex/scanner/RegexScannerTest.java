@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,27 @@ public class RegexScannerTest {
         }
         Assert.assertEquals(3, count);
     }
+    
+    @Test
+    public void testUUID() {
+        final String regex = "[0-9abcdef]{8}(-[0-9abcdef]{4}){3}-[0-9abcdef]{12}";
+        final String text = "uuid : 6d0a3538-9760-41ae-965d-7aad70021f81\n" +
+                "uuid : d7d97fb3-3676-4109-9a94-7acc5f593ace\n" +
+                "uuid : 02e87dd3-10ff-43cf-9572-bd9d151bb439\n" +
+                "uuid : 632a4c31-8dfe-43a3-8f8d-15b472292cc9";
+    
+        final List<String> expectedUUIDs = Arrays.asList("6d0a3538-9760-41ae-965d-7aad70021f81",
+                "d7d97fb3-3676-4109-9a94-7acc5f593ace",
+                "02e87dd3-10ff-43cf-9572-bd9d151bb439",
+                "632a4c31-8dfe-43a3-8f8d-15b472292cc9");
+        
+        final List<String> foundUUIDs = new ArrayList<>();
+        final RegexScanner regexScanner = new RegexScanner(text, regex);
+        while (regexScanner.hasNext()) {
+            foundUUIDs.add(regexScanner.next());
+        }
+        Assert.assertArrayEquals(expectedUUIDs.toArray(), foundUUIDs.toArray());
+    }
 
     @Test
     public void testNextWithMapper() {
@@ -69,8 +91,6 @@ public class RegexScannerTest {
         while (regexScanner.hasNext()) {
             Integer length = regexScanner.next(String::length);
             countOfLengths += length;
-
-
         }
         Assert.assertEquals(2 * "Lorem".length(), countOfLengths);
         regexScanner.close();
@@ -98,5 +118,21 @@ public class RegexScannerTest {
         System.out.println(keyValueMap);
         Assert.assertEquals(5, keyValueMap.size());
         regexScanner.close();
+    }
+    
+    @Test(expected = IllegalStateException.class)
+    public void testHasNextWhenScannerClosed(){
+       final RegexScanner regexScanner = new RegexScanner("some input string",".*");
+        regexScanner.close();
+        while (regexScanner.hasNext()) {
+            regexScanner.next();
+        }
+    }
+    
+    @Test(expected = IllegalStateException.class)
+    public void testNextWhenScannerClosed(){
+        final RegexScanner regexScanner = new RegexScanner("some input string",".*");
+        regexScanner.close();
+        regexScanner.next();
     }
 }
